@@ -19,7 +19,7 @@ public class GerenciadorServicosAdicionais {
         this.repositorioReservasServico = repositorioReservasServico;
     }
 
-    public void cadastrarServico(String nome, String descricao, java.math.BigDecimal preco, ServicoAdicional.TipoServico tipo) {
+    public void cadastrarServico(String nome, String descricao, double preco, ServicoAdicional.TipoServico tipo) {
         ServicoAdicional servico = new ServicoAdicional(nome, descricao, preco, tipo);
         repositorioServicosAdicionais.salvar(servico);
     }

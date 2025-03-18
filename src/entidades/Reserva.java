@@ -1,7 +1,6 @@
 package entidades;
 
 import java.time.LocalDateTime;
-import java.math.BigDecimal;
 
 public class Reserva {
     private String id;
@@ -10,7 +9,7 @@ public class Reserva {
     private LocalDateTime dataCheckIn;
     private LocalDateTime dataCheckOut;
     private StatusReserva status;
-    private BigDecimal valorTotal;
+    private double valorTotal;
 
     public enum StatusReserva {
         PENDENTE,      // Reserva criada, aguardando check-in
@@ -89,7 +88,7 @@ public class Reserva {
         return status;
     }
 
-    public BigDecimal getValorTotal() {
+    public double getValorTotal() {
         return valorTotal;
     }
 

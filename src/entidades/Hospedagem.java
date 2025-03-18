@@ -1,21 +1,19 @@
 package entidades;
 
-import java.math.BigDecimal;
-
 public abstract class Hospedagem {
     private String identificacao;
     private int capacidadeMaxima;
-    private BigDecimal precoDiaria;
+    private double precoDiaria;
     private boolean disponivel;
 
-    public Hospedagem(String identificacao, int capacidadeMaxima, BigDecimal precoDiaria) {
+    public Hospedagem(String identificacao, int capacidadeMaxima, double precoDiaria) {
         this.identificacao = identificacao;
         this.capacidadeMaxima = capacidadeMaxima;
         this.precoDiaria = precoDiaria;
         this.disponivel = true;
     }
 
-    public abstract BigDecimal calcularValorHospedagem(int numeroDiarias);
+    public abstract double calcularValorHospedagem(int numeroDiarias);
 
     // Getters e Setters
     public String getIdentificacao() {
@@ -26,11 +24,11 @@ public abstract class Hospedagem {
         return capacidadeMaxima;
     }
 
-    public BigDecimal getPrecoDiaria() {
+    public double getPrecoDiaria() {
         return precoDiaria;
     }
 
-    public void setPrecoDiaria(BigDecimal precoDiaria) {
+    public void setPrecoDiaria(double precoDiaria) {
         this.precoDiaria = precoDiaria;
     }
 

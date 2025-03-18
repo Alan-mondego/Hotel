@@ -2,7 +2,6 @@ package servicos;
 
 import entidades.*;
 import repositorio.RepositorioHospedagens;
-import java.math.BigDecimal;
 import java.util.List;
 
 public class GerenciadorHospedagens {
@@ -13,17 +12,17 @@ public class GerenciadorHospedagens {
     }
 
     public void cadastrarQuarto(String identificacao, int capacidadeMaxima, 
-                              BigDecimal precoDiaria, Quarto.TipoQuarto tipo) {
+                              double precoDiaria) {
         if (repositorio.existe(identificacao)) {
             throw new IllegalArgumentException("Identificação já cadastrada");
         }
 
-        Quarto quarto = new Quarto(identificacao, capacidadeMaxima, precoDiaria, tipo);
+        Quarto quarto = new Quarto(identificacao, capacidadeMaxima, precoDiaria);
         repositorio.salvar(quarto);
     }
 
     public void cadastrarCabana(String identificacao, int capacidadeMaxima,
-                               BigDecimal precoDiaria, boolean possuiLareira, 
+                               double precoDiaria, boolean possuiLareira, 
                                boolean possuiVistaMar) {
         if (repositorio.existe(identificacao)) {
             throw new IllegalArgumentException("Identificação já cadastrada");
@@ -35,7 +34,7 @@ public class GerenciadorHospedagens {
     }
 
     public void cadastrarApartamento(String identificacao, int capacidadeMaxima,
-                                   BigDecimal precoDiaria, int numeroQuartos,
+                                   double precoDiaria, int numeroQuartos,
                                    boolean possuiCozinha, int andar) {
         if (repositorio.existe(identificacao)) {
             throw new IllegalArgumentException("Identificação já cadastrada");
@@ -70,7 +69,7 @@ public class GerenciadorHospedagens {
         repositorio.atualizarDisponibilidade(identificacao, disponivel);
     }
 
-    public void atualizarPrecoDiaria(String identificacao, BigDecimal novoPrecoDiaria) {
+    public void atualizarPrecoDiaria(String identificacao, double novoPrecoDiaria) {
         Hospedagem hospedagem = buscarPorId(identificacao);
         hospedagem.setPrecoDiaria(novoPrecoDiaria);
         repositorio.atualizar(hospedagem);

@@ -1,7 +1,6 @@
 package servicos;
 
 import entidades.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,7 @@ public class ServicoRelatorio {
         relatorio.append("=== Relatório Financeiro ===\n\n");
         relatorio.append(String.format("Período: %s a %s\n\n", inicio, fim));
 
-        BigDecimal totalReceita = BigDecimal.ZERO;
+        double totalReceita = 0.0;
         int totalReservas = 0;
 
         List<Reserva> reservasPeriodo = servicoReserva.listarReservasAtivas().stream()
@@ -65,14 +64,14 @@ public class ServicoRelatorio {
             .collect(Collectors.toList());
 
         for (Reserva reserva : reservasPeriodo) {
-            totalReceita = totalReceita.add(reserva.getValorTotal());
+            totalReceita += reserva.getValorTotal();
             totalReservas++;
         }
 
         relatorio.append(String.format("Total de Reservas: %d\n", totalReservas));
         relatorio.append(String.format("Receita Total: R$ %.2f\n", totalReceita));
         relatorio.append(String.format("Média por Reserva: R$ %.2f\n", 
-            totalReservas > 0 ? totalReceita.divide(BigDecimal.valueOf(totalReservas)) : BigDecimal.ZERO));
+            totalReservas > 0 ? totalReceita / totalReservas : 0.0));
 
         return relatorio.toString();
     }

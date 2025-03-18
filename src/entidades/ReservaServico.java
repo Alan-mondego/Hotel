@@ -1,14 +1,13 @@
 package entidades;
 
 import java.time.LocalDateTime;
-import java.math.BigDecimal;
 
 public class ReservaServico {
     private String id;
     private Reserva reserva;
     private ServicoAdicional servico;
     private LocalDateTime dataHora;
-    private BigDecimal valorTotal;
+    private double valorTotal;
     private StatusReservaServico status;
 
     public enum StatusReservaServico {
@@ -63,7 +62,7 @@ public class ReservaServico {
         return dataHora;
     }
 
-    public BigDecimal getValorTotal() {
+    public double getValorTotal() {
         return valorTotal;
     }
 

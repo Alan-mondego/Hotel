@@ -1,13 +1,12 @@
 package entidades;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class ServicoAdicional {
     private String id;
     private String nome;
     private String descricao;
-    private BigDecimal preco;
+    private double preco;
     private TipoServico tipo;
     private boolean disponivel;
 
@@ -18,7 +17,7 @@ public class ServicoAdicional {
         LAVANDERIA
     }
 
-    public ServicoAdicional(String nome, String descricao, BigDecimal preco, TipoServico tipo) {
+    public ServicoAdicional(String nome, String descricao, double preco, TipoServico tipo) {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
@@ -51,11 +50,11 @@ public class ServicoAdicional {
         this.descricao = descricao;
     }
 
-    public BigDecimal getPreco() {
+    public double getPreco() {
         return preco;
     }
 
-    public void setPreco(BigDecimal preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 
