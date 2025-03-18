@@ -179,7 +179,15 @@ public class Main {
                                         sc.nextLine();
 
                                         gerenciadorHospedagens.cadastrarApartamento(numeroApto, capacidadeApto, diariaApto, numeroQuartos, possuiCozinha, andar);
-                                        System.out.println("Apartamento cadastrado com sucesso!");
+                                        System.out.println("\nApartamento cadastrado com sucesso!");
+                                        System.out.println("=== DETALHES DO APARTAMENTO ===");
+                                        System.out.println("Número: " + numeroApto);
+                                        System.out.println("Capacidade: " + capacidadeApto + " pessoas");
+                                        System.out.println("Diária: R$ " + String.format("%.2f", diariaApto));
+                                        System.out.println("Número de quartos: " + numeroQuartos);
+                                        System.out.println("Possui cozinha: " + (possuiCozinha ? "Sim" : "Não"));
+                                        System.out.println("Andar: " + andar);
+                                        System.out.println("----------------------------");
                                         cadastroAptoSucesso = true;
                                     } catch (Exception e) {
                                         System.out.println("Erro: " + e.getMessage());
@@ -210,7 +218,14 @@ public class Main {
                                         boolean possuiVistaMar = sc.nextLine().equalsIgnoreCase("S");
 
                                         gerenciadorHospedagens.cadastrarCabana(numeroCabana, capacidadeCabana, diariaCabana, possuiLareira, possuiVistaMar);
-                                        System.out.println("Cabana cadastrada com sucesso!");
+                                        System.out.println("\nCabana cadastrada com sucesso!");
+                                        System.out.println("=== DETALHES DA CABANA ===");
+                                        System.out.println("Número: " + numeroCabana);
+                                        System.out.println("Capacidade: " + capacidadeCabana + " pessoas");
+                                        System.out.println("Diária: R$ " + String.format("%.2f", diariaCabana));
+                                        System.out.println("Possui lareira: " + (possuiLareira ? "Sim" : "Não"));
+                                        System.out.println("Possui vista para o mar: " + (possuiVistaMar ? "Sim" : "Não"));
+                                        System.out.println("----------------------------");
                                         cadastroCabanaSucesso = true;
                                     } catch (Exception e) {
                                         System.out.println("Erro: " + e.getMessage());
@@ -261,18 +276,54 @@ public class Main {
                                             boolean cadastroServicoSucesso = false;
                                             while (!cadastroServicoSucesso) {
                                                 try {
-                                                    System.out.println("Nome do serviço:");
-                                                    String nome = sc.nextLine();
-                                                    System.out.println("Descrição:");
-                                                    String descricao = sc.nextLine();
-                                                    System.out.println("Preço:");
-                                                    double preco = sc.nextDouble();
-                                                    sc.nextLine();
-                                                    System.out.println("Tipo (PASSEIO, TRANSFER, LIMPEZA):");
-                                                    String tipoServico = sc.nextLine();
+                                                    System.out.println("\n=== SERVIÇOS PRÉ-ESTABELECIDOS ===");
+                                                    System.out.println("1-Passeio Turístico (R$ 150,00)");
+                                                    System.out.println("2-Transfer Aeroporto (R$ 200,00)");
+                                                    System.out.println("3-Transfer Rodoviária (R$ 150,00)");
+                                                    System.out.println("4-Lavanderia (R$ 80,00)");
+                                                    System.out.println("Escolha o serviço:");
                                                     
-                                                    gerenciadorServicosAdicionais.cadastrarServico(nome, descricao, preco, ServicoAdicional.TipoServico.valueOf(tipoServico.toUpperCase()));
+                                                    int escolhaServico = sc.nextInt();
+                                                    sc.nextLine();
+                                                    
+                                                    String nome, id;
+                                                    double preco;
+                                                    ServicoAdicional.TipoServico tipo;
+                                                    
+                                                    switch (escolhaServico) {
+                                                        case 1:
+                                                            nome = "Passeio Turístico";
+                                                            preco = 150.00;
+                                                            tipo = ServicoAdicional.TipoServico.PASSEIO_TURISTICO;
+                                                            id = "SERV001";
+                                                            break;
+                                                        case 2:
+                                                            nome = "Transfer Aeroporto";
+                                                            preco = 200.00;
+                                                            tipo = ServicoAdicional.TipoServico.TRANSFER_AEROPORTO;
+                                                            id = "SERV002";
+                                                            break;
+                                                        case 3:
+                                                            nome = "Transfer Rodoviária";
+                                                            preco = 150.00;
+                                                            tipo = ServicoAdicional.TipoServico.TRANSFER_RODOVIARIA;
+                                                            id = "SERV003";
+                                                            break;
+                                                        case 4:
+                                                            nome = "Lavanderia";
+                                                            preco = 80.00;
+                                                            tipo = ServicoAdicional.TipoServico.LAVANDERIA;
+                                                            id = "SERV004";
+                                                            break;
+                                                        default:
+                                                            throw new IllegalArgumentException("Opção inválida!");
+                                                    }
+                                                    
+                                                    ServicoAdicional servico = new ServicoAdicional(nome, "", preco, tipo);
+                                                    servico.setId(id);
+                                                    repositorioServicosAdicionais.salvar(servico);
                                                     System.out.println("Serviço cadastrado com sucesso!");
+                                                    System.out.println("ID do serviço: " + id);
                                                     cadastroServicoSucesso = true;
                                                 } catch (Exception e) {
                                                     System.out.println("Erro: " + e.getMessage());
@@ -287,7 +338,13 @@ public class Main {
                                         
                                         case 2:
                                             System.out.println("\nServiços disponíveis:");
-                                            gerenciadorServicosAdicionais.listarServicosDisponiveis();
+                                            List<ServicoAdicional> servicos = gerenciadorServicosAdicionais.listarServicosDisponiveis();
+                                            for (ServicoAdicional s : servicos) {
+                                                System.out.println("\nID: " + s.getId());
+                                                System.out.println("Nome: " + s.getNome());
+                                                System.out.println("Preço: R$ " + String.format("%.2f", s.getPreco()));
+                                                System.out.println("----------------------------");
+                                            }
                                             break;
                                         
                                         case 3:
@@ -341,14 +398,33 @@ public class Main {
                             boolean reservaSucesso = false;
                             while (!reservaSucesso) {
                                 try {
-                                    System.out.println("\nClientes cadastrados:");
+                                    System.out.println("Clientes cadastrados:");
                                     gerenciadorClientes.listarTodos();
 
-                                    System.out.println("\nInforme o CPF do cliente:");
+                                    System.out.println("Informe o CPF do cliente:");
                                     String cpf = sc.nextLine();
                                     
+                                    // Verificar se o cliente existe
+                                    Cliente cliente = gerenciadorClientes.buscarPorCpf(cpf);
+                                    if (cliente == null) {
+                                        System.out.println("Cliente não encontrado. Retornando ao menu principal...");
+                                        break;
+                                    }
+                                    
+                                    System.out.println("\nCliente encontrado: " + cliente.getNome());
                                     System.out.println("\nHospedagens disponíveis:");
-                                    gerenciadorHospedagens.listarDisponiveis();
+                                    List<Hospedagem> hospedagensDisponiveis = gerenciadorHospedagens.listarDisponiveis();
+                                    if (hospedagensDisponiveis.isEmpty()) {
+                                        throw new IllegalArgumentException("Não há hospedagens disponíveis no momento.");
+                                    }
+                                    
+                                    for (Hospedagem h : hospedagensDisponiveis) {
+                                        System.out.println("\nID: " + h.getIdentificacao());
+                                        System.out.println("Tipo: " + h.getClass().getSimpleName());
+                                        System.out.println("Capacidade: " + h.getCapacidadeMaxima() + " pessoas");
+                                        System.out.println("Diária: R$ " + String.format("%.2f", h.getPrecoDiaria()));
+                                        System.out.println("----------------------------");
+                                    }
 
                                     System.out.println("\nInforme o ID da hospedagem que deseja reservar:");
                                     String idHospedagem = sc.nextLine();
@@ -514,12 +590,25 @@ public class Main {
                     break;
 
                 case 6:
-                    System.out.println("\n=== REALIZAR CHECK-OUT ===");
-                    System.out.print("ID da reserva: ");
-                    String reservaIdCheckOut = sc.nextLine();
-                    
-                    gerenciadorReservas.realizarCheckOut(reservaIdCheckOut);
-                    System.out.println("Check-out realizado com sucesso!");
+                    boolean checkOutSucesso = false;
+                    while (!checkOutSucesso) {
+                        try {
+                            System.out.println("\n=== REALIZAR CHECK-OUT ===");
+                            System.out.println("ID da reserva: ");
+                            String reservaIdCheckOut = sc.nextLine();
+                            
+                            gerenciadorReservas.realizarCheckOut(reservaIdCheckOut);
+                            System.out.println("Check-out realizado com sucesso!");
+                            checkOutSucesso = true;
+                        } catch (Exception e) {
+                            System.out.println("Erro: " + e.getMessage());
+                            System.out.println("Deseja tentar novamente? (S/N)");
+                            String resposta = sc.nextLine();
+                            if (!resposta.equalsIgnoreCase("S")) {
+                                break;
+                            }
+                        }
+                    }
                     break;
 
                 case 7:
@@ -554,14 +643,22 @@ public class Main {
                         case 1:
                             System.out.println("\nRelatório de Reservas Ativas:");
                             List<Reserva> reservasAtivas = gerenciadorReservas.listarReservasAtivas();
-                            for (Reserva r : reservasAtivas) {
-                                System.out.println("\nReserva ID: " + r.getId());
-                                System.out.println("Cliente: " + r.getCliente().getNome());
-                                System.out.println("Hospedagem: " + r.getHospedagem().getIdentificacao());
-                                System.out.println("Check-in: " + r.getDataCheckIn());
-                                System.out.println("Check-out: " + r.getDataCheckOut());
-                                System.out.println("Valor Total: R$ " + String.format("%.2f", r.getValorTotal()));
-                                System.out.println("----------------------------");
+                            if (reservasAtivas.isEmpty()) {
+                                System.out.println("Não há reservas ativas no momento.");
+                            } else {
+                                for (Reserva r : reservasAtivas) {
+                                    System.out.println("\n=== DETALHES DA RESERVA ===");
+                                    System.out.println("ID: " + r.getId());
+                                    System.out.println("Cliente: " + r.getCliente().getNome());
+                                    System.out.println("CPF: " + r.getCliente().getCpf());
+                                    System.out.println("Telefone: " + r.getCliente().getTelefone());
+                                    System.out.println("\nHospedagem: " + r.getHospedagem().getIdentificacao());
+                                    System.out.println("Check-in: " + r.getDataCheckIn().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+                                    System.out.println("Check-out: " + r.getDataCheckOut().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+                                    System.out.println("Valor Total: R$ " + String.format("%.2f", r.getValorTotal()));
+                                    System.out.println("Status: " + r.getStatus());
+                                    System.out.println("----------------------------");
+                                }
                             }
                             break;
 
